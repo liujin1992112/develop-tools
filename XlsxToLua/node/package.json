@@ -1,0 +1,26 @@
+{
+  "name": "com.lj.tools",
+  "version": "1.0.0",
+  "description": "nodejs xlsx convert to lua script",
+  "main": "main.js",
+  "dependencies": {
+    "node-xlsx": "^0.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liujin1992112/develop-tools.git"
+  },
+  "keywords": [
+    "main"
+  ],
+  "author": "liujin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liujin1992112/develop-tools/issues"
+  },
+  "homepage": "https://github.com/liujin1992112/develop-tools#readme"
+}
