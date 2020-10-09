@@ -6,6 +6,8 @@ Constants.EXCEL_TEMP_FILE_FILE_NAME_START_STRING = "~$";
 // Excel默认sheet的名称前缀
 Constants.EXCEL_INVALIS_SHEET_NAME = "Sheet";
 
+Constants.EXCEL_KEY_FIELD_NAME = "key";
+
 // 每张数据表前三行分别字段变量名、声明字段描述、字段数据类型
 // 注意:暂时定义前三个,后期拓展
 Constants.DATA_FIELD_NAME_INDEX = 0;
