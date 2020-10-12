@@ -47,29 +47,37 @@ TableExportToLuaHelper.exportTableToLua = function(tableInfo) {
 
     let rowCount = tableInfo.rowCount;
     let columnCount = tableInfo.columnCount;
-    let dataCount = tableInfo.dataCount;
+    let dataCount = tableInfo.dataCount;//获取表格中数据行数
     let allField = tableInfo.getAllClientFieldInfo();
     let keyColumnField = tableInfo.GetKeyColumnFieldInfo();
     let isAddKeyToLuaTable = keyColumnField ? true : false;
     for(let row = 0; row < dataCount; row++) {
         content += TableExportToLuaHelper.getLuaTableIndentation(currentLevel);
         if(isAddKeyToLuaTable) {
+            // 将主键列作为key生成
             if(keyColumnField.dataType == DataType.Int || keyColumnField.dataType == DataType.Long) {
                 content += `[${keyColumnField.data[row]}]`;
             }else if(keyColumnField.dataType == DataType.String) {
                 content += `["${keyColumnField.data[row]}"]`;
             }
-        }else {
 
+            content += " = {";
+            currentLevel++;
+            for(let column = 0; column < columnCount; column++) {
+                content += TableExportToLuaHelper._getOneField(allField[column], row, currentLevel);
+            }
+            content += "}";
+            currentLevel--;
+        }else {
+            content += "{"
+            for(let column = 0; column < columnCount; column++) {
+                content += TableExportToLuaHelper._getOneField(allField[column], row, currentLevel);
+            }
+            content += "}";
         }
-        content += `[${row}]`;
-        content += " = {";
-        currentLevel++;
-        for(let column = 0; column < columnCount; column++) {
-            content += TableExportToLuaHelper._getOneField(allField[column], row, currentLevel);
-        }
-        content += "}\n";
-        currentLevel--;
+
+        //一行数据生成完毕后添加右括号结尾等
+        content += ",\n"
     }
 
     // 生成数据内容结尾
@@ -125,6 +133,8 @@ TableExportToLuaHelper._getOneField = function(fieldInfo, row, level) {
     }
 
     content +=  value;
+
+    //一个字段结尾加逗号并换行
     content += ","
     return content;
 }
@@ -133,7 +143,7 @@ TableExportToLuaHelper._GetNumberValue = function(fieldInfo, row, level) {
     if (fieldInfo.data[row] == null)
         return "nil";
     else
-        return fieldInfo.data[row].ToString();
+        return fieldInfo.data[row];
 }
 
 TableExportToLuaHelper._GetStringValue = function(fieldInfo, row, level) {
@@ -150,12 +160,56 @@ TableExportToLuaHelper._GetStringValue = function(fieldInfo, row, level) {
     return content;
 }
 
-TableExportToLuaHelper._GetBoolValue = function(fieldInfo, row, level)
-{
-    if (fieldInfo.data[row] == true)
-        return "true";
-    else
-        return "false";
+/**
+ * 处理表格内容为true或者false字段
+ * @param {*} fieldInfo 
+ * @param {*} row 
+ * @param {*} level 
+ */
+TableExportToLuaHelper._GetBoolValue = function(fieldInfo, row, level) {
+    if (JSON.parse(fieldInfo.data[row]) == true) return "true";
+    return "false";
+}
+
+TableExportToLuaHelper._GetLangValue = function(fieldInfo, row, level) {
+    let content = "";
+    if(fieldInfo.data[row]) {
+        let str = new String(fieldInfo.data[row]);
+        str.replace("\n", "\\n").replace("\"", "\\\"");
+        let content = "";
+        content += "\"";
+        content += str;
+        content += "\"";
+    }else {
+        content += "\"";
+        content += "nil";
+        content += "\"";
+    }
+    return content;
+}
+
+TableExportToLuaHelper._GetDateValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+}
+
+TableExportToLuaHelper._GetTimeValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+}
+
+TableExportToLuaHelper._GetJsonValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+}
+
+TableExportToLuaHelper._GetTableStringValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+}
+
+TableExportToLuaHelper._GetMapStringValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+}
+
+TableExportToLuaHelper._GetSetValue = function(fieldInfo, row, level) {
+    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
 }
 
 TableExportToLuaHelper.prototype = {

@@ -10,6 +10,8 @@ var FieldInfo = function() {
 
     //如果该字段不是集合类型，直接依次存储该字段下的所有行的数据，否则存储每行定义的该集合数据是否有效
     this.data = null;
+
+    this.childField = null;
 }
 
 FieldInfo.prototype = {

@@ -47,8 +47,8 @@ TableInfo.prototype = {
             if(this.allField[0].fieldName.toLowerCase() == Constants.EXCEL_KEY_FIELD_NAME) {
                 return this.allField[0];
             }
-            return true;
         }
+        return null;
     },
 
     _analyzeOneField: function(sheet, columnIndex) {
@@ -65,7 +65,7 @@ TableInfo.prototype = {
         for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < this.rowCount; i++) {
             data.push(sheet.data[i][columnIndex]);
         }
-        console.log(fieldInfo)
+        // console.log(fieldInfo)
         return fieldInfo;
     },
 
