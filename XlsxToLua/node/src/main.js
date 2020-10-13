@@ -11,7 +11,7 @@ const TableAnalyzeHelper = require("./xlsxtolua/TableAnalyzeHelper")
 let cfgPath = path.resolve("../config");
 let files = new Array();
 console.log("配置文件路径:" + cfgPath);
-utils.listFiles(cfgPath, files, true);
+utils.listFiles(cfgPath, files, false);
 
 files.forEach((filePath) => {
 

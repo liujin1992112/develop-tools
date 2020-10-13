@@ -11,7 +11,7 @@ var TableInfo = function() {
     this.rowCount = 0;//表行数
     this.columnCount = 0;//表列数
     this.dataCount = 0;//数据行数
-    this.allField = null;
+    this.allField = new Array();
 }
 
 
@@ -19,15 +19,14 @@ var TableInfo = function() {
 TableInfo.prototype = {
     constructor:TableInfo,
 
-    analyzeFieldInfo: function(sheet) {
-        this.dataCount = sheet.data.length - Constants.DATA_FIELD_DATA_START_INDEX;
-        this.allField = new Array();
-        for (let i = 0; i < this.columnCount; i++) {
-            let fieldInfo = this._analyzeOneField(sheet, i);
-            this.allField.push(fieldInfo);
-        }
+    /**
+     * 添加表中字段数据
+     * @param {*} fieldInfo 
+     */
+    addField: function(fieldInfo) {
+        this.allField.push(fieldInfo);
     },
-
+ 
     getFieldInfo: function(column) {
         return this.allField[column];
     },
@@ -50,25 +49,6 @@ TableInfo.prototype = {
         }
         return null;
     },
-
-    _analyzeOneField: function(sheet, columnIndex) {
-        let fieldInfo = new FieldInfo();
-        fieldInfo.tableName = sheet.name;
-        fieldInfo.fieldName = sheet.data[Constants.DATA_FIELD_NAME_INDEX][columnIndex];
-        fieldInfo.dataTypeString = sheet.data[Constants.DATA_FIELD_DATA_TYPE_INDEX][columnIndex];
-        fieldInfo.dataType = DataType.analyzeDataType(fieldInfo.dataTypeString);
-        fieldInfo.desc = sheet.data[Constants.DATA_FIELD_DESC_INDEX][columnIndex];
-        fieldInfo.columnSeq = columnIndex;
-
-        let data = new Array();
-        fieldInfo.data = data;
-        for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < this.rowCount; i++) {
-            data.push(sheet.data[i][columnIndex]);
-        }
-        // console.log(fieldInfo)
-        return fieldInfo;
-    },
-
 
 }
 
