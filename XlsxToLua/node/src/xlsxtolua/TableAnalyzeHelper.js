@@ -27,8 +27,7 @@ TableAnalyzeHelper._AnalyzeTable = function(sheet) {
         return null;
     }else {
         if (sheet.data.length <= Constants.DATA_FIELD_DATA_START_INDEX) {
-            console.error("每张数据表前三行分别字段变量名、声明字段描述、字段数据类型")
-            return null;
+            throw new Error("每张数据表前三行分别字段变量名、声明字段描述、字段数据类型")
         }
     
         if (sheet.data[0].length < 2) {
@@ -41,7 +40,7 @@ TableAnalyzeHelper._AnalyzeTable = function(sheet) {
         tableInfo.dataCount = sheet.data.length - Constants.DATA_FIELD_DATA_START_INDEX;
 
         for (let i = 0; i < tableInfo.columnCount; i++) {
-            let fieldInfo = TableAnalyzeHelper._AnalyzeOneField(sheet, tableInfo, i, null);
+            let fieldInfo = TableAnalyzeHelper._AnalyzeOneField(sheet.data, tableInfo, i, null);
             tableInfo.addField(fieldInfo);
         }
 
@@ -50,16 +49,24 @@ TableAnalyzeHelper._AnalyzeTable = function(sheet) {
     }
 }
 
-TableAnalyzeHelper._AnalyzeOneField = function(sheet, tableInfo, columnIndex, parentField) {
+TableAnalyzeHelper._AnalyzeOneField = function(dt, tableInfo, columnIndex, parentField) {
     let fieldInfo = new FieldInfo();
-    fieldInfo.tableName = sheet.name;
-    fieldInfo.fieldName = sheet.data[Constants.DATA_FIELD_NAME_INDEX][columnIndex];
-    fieldInfo.dataTypeString = sheet.data[Constants.DATA_FIELD_DATA_TYPE_INDEX][columnIndex];
-    fieldInfo.dataType = DataType.analyzeDataType(fieldInfo.dataTypeString);
-    fieldInfo.desc = sheet.data[Constants.DATA_FIELD_DESC_INDEX][columnIndex];
+    fieldInfo.tableName = tableInfo.tableName;
+    fieldInfo.desc = dt[Constants.DATA_FIELD_DESC_INDEX][columnIndex];
     fieldInfo.columnSeq = columnIndex;
+    fieldInfo.parentField = parentField;// 引用父FileInfo
 
-    let dt = sheet.data;
+    // 如果该字段是array类型的子元素，则不填写变量名（array下属元素的变量名自动顺序编号）
+    // 并且如果子元素不是集合类型，也不需配置数据类型（直接使用array声明的子元素数据类型，子元素列不再单独配置），直接依次声明各子元素列
+    if (parentField != null && parentField.dataType == DataType.Array) {
+        fieldInfo.dataTypeString = parentField.arrayChildDataTypeString;
+        fieldInfo.dataType = parentField.arrayChildDataType;
+    }else {
+        fieldInfo.fieldName = dt[Constants.DATA_FIELD_NAME_INDEX][columnIndex];
+        fieldInfo.dataTypeString = dt[Constants.DATA_FIELD_DATA_TYPE_INDEX][columnIndex];
+        fieldInfo.dataType = DataType.analyzeDataType(fieldInfo.dataTypeString);
+    }
+
     switch(fieldInfo.dataType) {
         case DataType.Int:
             TableAnalyzeHelper._AnalyzeIntType(fieldInfo, tableInfo, dt, columnIndex, parentField);
@@ -109,19 +116,24 @@ TableAnalyzeHelper._AnalyzeOneField = function(sheet, tableInfo, columnIndex, pa
 }
 
 TableAnalyzeHelper._AnalyzeIntType = function(fieldInfo, tableInfo, dt, columnIndex, parentField) {
-    for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < tableInfo.rowCount; i++) {
-        let res = parseInt(dt[i][columnIndex]);
-        if(isNaN(res)) {
-            //类型转换异常处理
-            let error = `表格名称:${tableInfo.tableName} 第${i}行 第${columnIndex} 数据转换为int类型错误`;
-            throw new Error(error);
-        }else {
-            fieldInfo.data.push(res);
+    if(parentField != null) {
+
+    }else {
+        for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < tableInfo.rowCount; i++) {
+            let res = parseInt(dt[i][columnIndex]);
+            if(isNaN(res)) {
+                //类型转换异常处理
+                let error = `表格名称:${tableInfo.tableName} 第${i}行 第${columnIndex} 数据转换为int类型错误`;
+                throw new Error(error);
+            }else {
+                fieldInfo.data.push(res);
+            }
         }
     }
 }
 
 TableAnalyzeHelper._AnalyzeLongType= function(fieldInfo, tableInfo, dt, columnIndex, parentField) {
+
     for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < tableInfo.rowCount; i++) {
         let res = parseInt(dt[i][columnIndex]);
         if(isNaN(res)) {
@@ -190,11 +202,81 @@ TableAnalyzeHelper._AnalyzeMapStringType = function(fieldInfo, tableInfo, dt, co
 }
 
 TableAnalyzeHelper._AnalyzeArrayType = function(fieldInfo, tableInfo, dt, columnIndex, parentField) {
+    // 解析array声明的子元素的数据类型和个数
+    let childDefine = TableAnalyzeHelper._GetArrayChildDefine(fieldInfo.dataTypeString);
+    let childCount = childDefine.childCount;
+    let childDataType = childDefine.childDataType;
+    let childDataTypeString = childDefine.childDataTypeString;
+    
+    //array子元素类型
+    fieldInfo.arrayChildDataTypeString = childDataTypeString;
+    fieldInfo.arrayChildDataType = childDataType;
 
+    console.log(childDefine)
+    let seq = 1;
+    let tempCount = childCount;
+    while(tempCount > 0) {
+        let childFieldInfo = TableAnalyzeHelper._AnalyzeOneField(dt, tableInfo, columnIndex, fieldInfo);
+        if(childFieldInfo) {
+            childFieldInfo.fieldName = `${seq}`;
+            fieldInfo.childField.push(childFieldInfo);
+            ++seq;
+            --tempCount;
+        }
+    }
 }
 
 TableAnalyzeHelper._AnalyzeDictType = function(fieldInfo, tableInfo, dt, columnIndex, parentField) {
 
+}
+
+/**
+ * 解析字段为array的子类型定义
+ * @param {*} dataTypeString   解析形如array[type:n]（type为类型，n为array中元素个数）的array类型的声明字符串，获得子元素的类型以及子元素的个数
+ */
+TableAnalyzeHelper._GetArrayChildDefine = function(dataTypeString) {
+    let childCount = 0;
+    let childDataType = DataType.Invalid;
+    let childDataTypeString = null;
+    let leftBracketIndex = dataTypeString.indexOf("[");
+    let rightBracketIndex = dataTypeString.lastIndexOf("]");
+    if (leftBracketIndex != -1 && rightBracketIndex != -1) {
+        if (leftBracketIndex < rightBracketIndex) {
+             // 去掉首尾包裹的array[]
+            let typeAndCountString = dataTypeString.substring(leftBracketIndex + 1, rightBracketIndex).trim();
+            // 通过冒号分离类型和个数（注意不能用Split分隔，可能出现array[array[int:2]:3]这种嵌套结构，必须去找最后一个冒号的位置）
+            let lastColonIndex = typeAndCountString.lastIndexOf(':');
+            if (lastColonIndex == -1) {
+                throw new Error(`array类型数据声明不合法，请采用array[type:n]的形式，冒号分隔类型与个数的定义，你填写的类型为${dataTypeString}`)
+            }else {
+                let typeString = typeAndCountString.substring(0, lastColonIndex).trim();
+                let countString = typeAndCountString.substring(lastColonIndex + 1).trim();
+                let inputChildDataType = DataType.analyzeDataType(typeString);
+                if (inputChildDataType == DataType.Invalid) {
+                    throw new Error(`array类型数据声明不合法，子类型错误，你填写的类型为${dataTypeString}`)
+                }
+
+                var count = parseInt(countString);
+                if(isNaN(count)) {
+                    throw new Error(`array类型数据声明不合法，声明的下属元素个数不是合法的数字，你填写的个数为${countString}`)
+                }
+
+                if(count < 1) {
+                    throw new Error(`array类型数据声明不合法，声明的下属元素个数不能低于1个，你填写的个数为${countString}`)
+                }
+
+                childCount = childCount;
+                childDataType = inputChildDataType;
+                childDataTypeString = typeString;
+
+                return {childCount: count, childDataType: childDataType, childDataTypeString: childDataTypeString};
+            }
+        }else {
+
+        }
+    }else {
+        //如果字段中仅仅定义为array，则默认为string类型
+    }
 }
 
 
