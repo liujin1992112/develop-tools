@@ -190,7 +190,20 @@ TableAnalyzeHelper._AnalyzeTimeType = function(fieldInfo, tableInfo, dt, columnI
 }
 
 TableAnalyzeHelper._AnalyzeJsonType = function(fieldInfo, tableInfo, dt, columnIndex, parentField) {
-
+    for(let i = Constants.DATA_FIELD_DATA_START_INDEX; i < tableInfo.rowCount; i++) {
+        let inputData = dt[i][columnIndex].toLowerCase().trim();
+        if(!inputData || "" == inputData) {
+            fieldInfo.data.push(null);
+        }else {
+            fieldInfo.jsonString.push(inputData);
+            try {
+                var json = JSON.parse(dt[i][columnIndex]);//JSON数据异常,捕获
+                fieldInfo.data.push(json);
+            } catch (error) {
+                console.info(error);
+            }
+        }
+    }
 }
 
 TableAnalyzeHelper._AnalyzeTableStringType = function(fieldInfo, tableInfo, dt, columnIndex, parentField) {

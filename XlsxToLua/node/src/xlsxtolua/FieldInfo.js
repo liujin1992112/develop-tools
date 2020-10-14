@@ -20,7 +20,11 @@ var FieldInfo = function() {
     //array类型的子元素的数据类型
     this.arrayChildDataType = DataType.Invalid;
     //array类型的子元素的数据类型字符串
-    this.arrayChildDataTypeString = null; 
+    this.arrayChildDataTypeString = null;
+
+
+    //如果该字段为json型，JsonString中存储所填的所有json字符串，对应解析后的JsonData存储在Data中
+    this.jsonString = new Array();
 }
 
 FieldInfo.prototype = {

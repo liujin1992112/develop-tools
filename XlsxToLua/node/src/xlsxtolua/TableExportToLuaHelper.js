@@ -209,7 +209,16 @@ TableExportToLuaHelper._GetMapStringValue = function(fieldInfo, row, level) {
 }
 
 TableExportToLuaHelper._GetSetValue = function(fieldInfo, row, level) {
-    return TableExportToLuaHelper._GetLangValue(fieldInfo, row, level);
+    let content = "";
+    ++level;
+    content + "{\n";
+    fieldInfo.childField.forEach(element => {
+        content += TableExportToLuaHelper._getOneField(element, row, level);
+    });
+    --level;
+    content += TableExportToLuaHelper.getLuaTableIndentation(level);
+    content += "}";
+    return content;
 }
 
 TableExportToLuaHelper.prototype = {
