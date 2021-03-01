@@ -1,0 +1,151 @@
+const fs = require("fs")
+const xlsx = require('node-xlsx');
+const path = require('path');
+const util = require("util")
+
+//导入工具类
+const utils = require("./utils/utils");
+const DataType = require("./DataType")
+const Constants = require("./utils/Constants");
+
+function getTableIndentation(level) {
+    let indent = "";
+    for (let i = 0; i < level; i++) {
+        indent += Constants.TABLE_INDENTATION;
+    }
+    return indent;
+}
+
+let destPath = "./conf/"
+if (!fs.existsSync(destPath)) {
+    fs.mkdirSync(destPath, { recursive: true });
+}
+
+//将相对路径转换为绝对路径
+let cfgPath = "../../config"
+let files = new Array();
+console.log("配置文件夹路径:" + cfgPath);
+utils.listFiles(cfgPath, files, false);
+files.forEach((filePath) => {
+    let absolutePath = path.resolve(filePath)
+    if (absolutePath.indexOf(Constants.EXCEL_TEMP_FILE_FILE_NAME_START_STRING) == 0) {
+        //如果xlsx文件的名称以此为前缀,则说明为xlsx的临时文件
+    } else {
+        console.log(filePath);
+        console.log(absolutePath);
+        let sheetList = xlsx.parse(filePath);
+        if (sheetList && sheetList.length > 0) {
+            sheetList.forEach(sheet => {
+                if (sheet.name.indexOf(Constants.EXCEL_INVALIS_SHEET_NAME) == 0) {
+                    //Excel默认sheet的名称前缀
+                } else {
+                    console.log(sheet);
+
+                    let sheetName = sheet.name;
+                    //字段数组名称
+                    let fieldNames = sheet.data[Constants.DATA_FIELD_NAME_INDEX];
+                    // console.log(fieldNames);
+
+                    //类型数组
+                    let types = new Array();
+                    let dataTypeArray = sheet.data[Constants.DATA_FIELD_DATA_TYPE_INDEX];
+                    dataTypeArray.forEach(element => {
+                        types.push(DataType.analyzeDataType(element));
+                    });
+
+                    //数据部分
+                    let level = 1;
+                    let str = "var " + sheetName + "=";
+                    if (types[0] == DataType.PrimaryKey) {
+                        //生成Map类型json
+                        //生成Array类型json
+                        str += "{"
+                        for (let i = Constants.DATA_FIELD_DATA_START_INDEX; i < sheet.data.length; i++) {
+                            const rowData = sheet.data[i];
+                            let tmpStr = Constants.LINE_BREAK + getTableIndentation(level) + "\"" + rowData[0] + "\":" + "{";
+                            for (let j = 0; j < rowData.length; j++) {
+                                const colData = rowData[j];
+                                let type = types[j];
+                                let tmp = null;
+                                if (type == DataType.Int) {
+                                    tmp = parseInt(colData);
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                } else if (type == DataType.Float) {
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                    tmp = parseFloat(colData);
+                                } else if (type == DataType.Long) {
+                                    tmp = parseFloat(colData);
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                } else if (type == DataType.String) {
+                                    tmp = colData;
+                                    tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                } else if (type == DataType.Array) {
+
+                                } else if (type == DataType.PrimaryKey) {
+                                    tmp = colData;
+                                    tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                }
+                                if (j < rowData.length - 1) {
+                                    tmpStr += ","
+                                }
+                            }
+                            tmpStr += "}"
+                            str += tmpStr;
+                            if (i < sheet.data.length - 1) {
+                                str += ","
+                            }
+                        }
+                        str += Constants.LINE_BREAK;
+                        str += "}";
+                    } else {
+                        //生成Array类型json
+                        str += "["
+                        for (let i = Constants.DATA_FIELD_DATA_START_INDEX; i < sheet.data.length; i++) {
+                            const rowData = sheet.data[i];
+                            let tmpStr = Constants.LINE_BREAK + getTableIndentation(level) + "{";
+                            for (let j = 0; j < rowData.length; j++) {
+                                const colData = rowData[j];
+                                let type = types[j];
+                                let tmp = null;
+                                if (type == DataType.Int) {
+                                    tmp = parseInt(colData);
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                } else if (type == DataType.Float) {
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                    tmp = parseFloat(colData);
+                                } else if (type == DataType.Long) {
+                                    tmp = parseFloat(colData);
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
+                                } else if (type == DataType.String) {
+                                    tmp = colData;
+                                    tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                } else if (type == DataType.Array) {
+
+                                } else if (type == DataType.PrimaryKey) {
+                                    tmp = colData;
+                                    tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                }
+                                if (j < rowData.length - 1) {
+                                    tmpStr += ","
+                                }
+                            }
+                            tmpStr += "}"
+                            str += tmpStr;
+                            if (i < sheet.data.length - 1) {
+                                str += ","
+                            }
+                        }
+                        str += Constants.LINE_BREAK;
+                        str += "]";
+                    }
+
+                    str += Constants.LINE_BREAK + "module.exports=" + sheetName + ";";
+                    let confPath = path.join(path.resolve(destPath), sheetName + ".js");
+                    console.log(confPath);
+                    fs.writeFileSync(confPath, str);
+                }
+            });
+        }
+    }
+
+});
