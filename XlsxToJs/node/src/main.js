@@ -102,7 +102,18 @@ files.forEach((filePath) => {
                                     tmp = colData;
                                     tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
                                 } else if (type == DataType.Array) {
-
+                                    let tmp = "[";
+                                    if (colData && colData != "") {
+                                        let arr = colData.split(",");
+                                        for(let k = 0; k < arr.length; k++) {
+                                            tmp += arr[k];
+                                            if (k<arr.length-1) {
+                                                tmp += ","
+                                            }
+                                        }
+                                    }
+                                    tmp += "]";
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                 } else if (type == DataType.PrimaryKey) {
                                     tmp = colData;
                                     tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
@@ -142,7 +153,18 @@ files.forEach((filePath) => {
                                     tmp = colData;
                                     tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
                                 } else if (type == DataType.Array) {
-
+                                    let tmp = "[";
+                                    if (colData && colData != "") {
+                                        let arr = colData.split(",");
+                                        for(let k = 0; k < arr.length; k++) {
+                                            tmp += arr[k];
+                                            if (k<arr.length-1) {
+                                                tmp += ","
+                                            }
+                                        }
+                                    }
+                                    tmp += "]";
+                                    tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                 } else if (type == DataType.PrimaryKey) {
                                     tmp = colData;
                                     tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
