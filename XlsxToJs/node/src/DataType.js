@@ -12,10 +12,10 @@ DataType.Lang = 6;
 DataType.Date = 7;
 DataType.Time = 8;
 DataType.Json = 9;
-DataType.TableString = 10;
+DataType.Table = 10;
 DataType.Array = 11;
 DataType.Dict = 12;
-DataType.MapString = 13;
+DataType.Map = 13;
 DataType.PrimaryKey = 100;
 
 DataType.analyzeDataType = function(dataTypeString) {
