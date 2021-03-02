@@ -1,12 +1,34 @@
+//导入库
 const fs = require("fs")
 const xlsx = require('node-xlsx');
 const path = require('path');
 const util = require("util")
+const process = require('process');
+const program = require('commander');
 
 //导入工具类
 const utils = require("./utils/utils");
 const DataType = require("./DataType")
 const Constants = require("./utils/Constants");
+
+let cwd = process.cwd();//程序的当前工作空间目录,即是vscode中的项目根目录
+console.log(`项目根目录:${cwd}`);
+console.log(`node 路径:${process.argv[0]}`);
+console.log(`程序 入口:${process.argv[1]}`);
+
+let inDir,outDir;
+program
+    .version('0.0.1')
+    .option('-i, --in', 'in dir')
+    .option('-o, --out', 'out dir')
+program.parse(process.argv);
+const options = program.opts();
+if (options.in) {
+    inDir = program.args[0];
+}
+if (options.out) {
+    outDir = program.args[1];
+}
 
 function getTableIndentation(level) {
     let indent = "";
@@ -16,13 +38,13 @@ function getTableIndentation(level) {
     return indent;
 }
 
-let destPath = "./conf/"
+let destPath = outDir;
 if (!fs.existsSync(destPath)) {
     fs.mkdirSync(destPath, { recursive: true });
 }
 
 //将相对路径转换为绝对路径
-let cfgPath = "../../config"
+let cfgPath = inDir
 let files = new Array();
 console.log("配置文件夹路径:" + cfgPath);
 utils.listFiles(cfgPath, files, false);
@@ -31,15 +53,15 @@ files.forEach((filePath) => {
     if (absolutePath.indexOf(Constants.EXCEL_TEMP_FILE_FILE_NAME_START_STRING) == 0) {
         //如果xlsx文件的名称以此为前缀,则说明为xlsx的临时文件
     } else {
-        console.log(filePath);
-        console.log(absolutePath);
+        // console.log(filePath);
+        // console.log(absolutePath);
         let sheetList = xlsx.parse(filePath);
         if (sheetList && sheetList.length > 0) {
             sheetList.forEach(sheet => {
                 if (sheet.name.indexOf(Constants.EXCEL_INVALIS_SHEET_NAME) == 0) {
                     //Excel默认sheet的名称前缀
                 } else {
-                    console.log(sheet);
+                    // console.log(sheet);
 
                     let sheetName = sheet.name;
                     //字段数组名称
@@ -141,7 +163,7 @@ files.forEach((filePath) => {
 
                     str += Constants.LINE_BREAK + "module.exports=" + sheetName + ";";
                     let confPath = path.join(path.resolve(destPath), sheetName + ".js");
-                    console.log(confPath);
+                    // console.log(confPath);
                     fs.writeFileSync(confPath, str);
                 }
             });
