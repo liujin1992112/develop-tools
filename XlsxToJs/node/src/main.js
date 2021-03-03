@@ -16,11 +16,12 @@ console.info(`项目根目录:${cwd}`);
 console.info(`node 路径:${process.argv[0]}`);
 console.info(`程序 入口:${process.argv[1]}`);
 
-let inDir, outDir;
+let inDir, outDir, outType = "js";
 program
     .version('0.0.1')
     .option('-i, --in', 'in dir')
     .option('-o, --out', 'out dir')
+    .option('-t, --type', 'out file type(json、js)')
 program.parse(process.argv);
 const options = program.opts();
 if (options.in) {
@@ -28,6 +29,9 @@ if (options.in) {
 }
 if (options.out) {
     outDir = path.resolve(program.args[1]);
+}
+if (options.type) {
+    outType = program.args[2];
 }
 
 function getTableIndentation(level) {
@@ -79,7 +83,12 @@ files.forEach((filePath) => {
 
                         //数据部分
                         let level = 1;
-                        let str = "var " + sheetName + "=";
+                        let str;
+                        if (outType == "json") {
+                            str = "";
+                        } else if (outType == "js") {
+                            str = "var " + sheetName + "=";
+                        }
                         if (types[0] == DataType.PrimaryKey) {
                             //生成Map类型json
                             //生成Array类型json
@@ -188,9 +197,12 @@ files.forEach((filePath) => {
                             str += Constants.LINE_BREAK;
                             str += "]";
                         }
-
-                        str += Constants.LINE_BREAK + "module.exports=" + sheetName + ";";
-                        let confPath = path.join(path.resolve(destPath), sheetName + ".js");
+                        if (outType == "json") {
+                            str += "";
+                        } else if (outType == "js") {
+                            str += Constants.LINE_BREAK + "module.exports=" + sheetName + ";";
+                        }
+                        let confPath = path.join(path.resolve(destPath), sheetName + "." + outType);
                         fs.writeFileSync(confPath, str);
                     }
                 });
