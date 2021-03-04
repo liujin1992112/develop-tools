@@ -1,3 +1,5 @@
+const { types } = require("util");
+
 /**
  * xlsx中数据类型
  */
@@ -16,6 +18,7 @@ DataType.Table = 10;
 DataType.Array = 11;
 DataType.Dict = 12;
 DataType.Map = 13;
+DataType.Value = 14;
 DataType.PrimaryKey = 100;
 
 DataType.analyzeDataType = function(dataTypeString) {
@@ -40,12 +43,14 @@ DataType.analyzeDataType = function(dataTypeString) {
         return DataType.Json;
     else if (typeString.startsWith("tableString"))
         return DataType.TableString;
-    else if (typeString.startsWith("mapString"))
+    else if (typeString.startsWith("map"))
         return DataType.MapString;
     else if (typeString.startsWith("array"))
         return DataType.Array;
     else if (typeString.startsWith("dict"))
         return DataType.Dict;
+    else if (typeString.startsWith("value")) 
+        return DataType.Value;
     else if (typeString.startsWith("key"))
         return DataType.PrimaryKey;
     else

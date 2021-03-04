@@ -91,7 +91,6 @@ files.forEach((filePath) => {
                         }
                         if (types[0] == DataType.PrimaryKey) {
                             //生成Map类型json
-                            //生成Array类型json
                             str += "{"
                             for (let i = Constants.DATA_FIELD_DATA_START_INDEX; i < sheet.data.length; i++) {
                                 const rowData = sheet.data[i];
@@ -103,10 +102,7 @@ files.forEach((filePath) => {
                                     if (type == DataType.Int) {
                                         tmp = parseInt(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
-                                    } else if (type == DataType.Float) {
-                                        tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
-                                        tmp = parseFloat(colData);
-                                    } else if (type == DataType.Long) {
+                                    } else if (type == DataType.Float || type == DataType.Long) {
                                         tmp = parseFloat(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.String) {
@@ -115,7 +111,7 @@ files.forEach((filePath) => {
                                     } else if (type == DataType.Array) {
                                         let tmp = "[";
                                         if (colData && colData != "") {
-                                            let arr = colData.split(",");
+                                            let arr = String(colData).split(",");
                                             for (let k = 0; k < arr.length; k++) {
                                                 tmp += arr[k];
                                                 if (k < arr.length - 1) {
@@ -127,9 +123,13 @@ files.forEach((filePath) => {
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.Json || type == DataType.Map) {
                                         tmpStr += "\"" + fieldNames[j] + "\":" + colData;
+                                    } else if (type == DataType.Value) {
+                                        tmp = colData;
                                     } else if (type == DataType.PrimaryKey) {
                                         tmp = colData;
                                         tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                    } else {
+
                                     }
                                     if (j < rowData.length - 1) {
                                         tmpStr += ","
@@ -156,10 +156,7 @@ files.forEach((filePath) => {
                                     if (type == DataType.Int) {
                                         tmp = parseInt(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
-                                    } else if (type == DataType.Float) {
-                                        tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
-                                        tmp = parseFloat(colData);
-                                    } else if (type == DataType.Long) {
+                                    } else if (type == DataType.Float || type == DataType.Long) {
                                         tmp = parseFloat(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.String) {
@@ -168,7 +165,7 @@ files.forEach((filePath) => {
                                     } else if (type == DataType.Array) {
                                         let tmp = "[";
                                         if (colData && colData != "") {
-                                            let arr = colData.split(",");
+                                            let arr = String(colData).split(",");
                                             for (let k = 0; k < arr.length; k++) {
                                                 tmp += arr[k];
                                                 if (k < arr.length - 1) {
@@ -180,6 +177,8 @@ files.forEach((filePath) => {
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.Json || type == DataType.Map) {
                                         tmpStr += "\"" + fieldNames[j] + "\":" + colData;
+                                    } else if (type == DataType.Value) {
+                                        tmp = colData;
                                     } else if (type == DataType.PrimaryKey) {
                                         tmp = colData;
                                         tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
