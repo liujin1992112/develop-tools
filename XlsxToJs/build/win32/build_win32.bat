@@ -1,0 +1,1 @@
+pkg -t win ../../node/src/main.js

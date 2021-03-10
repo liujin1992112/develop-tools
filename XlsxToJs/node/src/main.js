@@ -106,7 +106,7 @@ files.forEach((filePath) => {
                                         tmp = parseFloat(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.String) {
-                                        tmp = colData;
+                                        tmp = (colData == undefined ? "" : colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
                                     } else if (type == DataType.Array) {
                                         let tmp = "[";
@@ -160,7 +160,7 @@ files.forEach((filePath) => {
                                         tmp = parseFloat(colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else if (type == DataType.String) {
-                                        tmp = colData;
+                                        tmp = (colData == undefined ? "" : colData);
                                         tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
                                     } else if (type == DataType.Array) {
                                         let tmp = "[";
