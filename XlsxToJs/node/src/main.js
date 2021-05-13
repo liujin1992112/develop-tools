@@ -94,7 +94,16 @@ files.forEach((filePath) => {
                             str += "{"
                             for (let i = Constants.DATA_FIELD_DATA_START_INDEX; i < sheet.data.length; i++) {
                                 const rowData = sheet.data[i];
-                                let tmpStr = Constants.LINE_BREAK + getTableIndentation(level) + "\"" + rowData[0] + "\":" + "{";
+                                let key = `"${rowData[0]}"`;
+                                if (outType == "json") {
+                                    //JSON不支持整数key值
+                                }else if (outType == "js") {
+                                    //js/ts支持整数key,但是必须包含[]
+                                    let numVal = Number(rowData[0]);
+                                    key = (!isNaN(numVal)) ? `[${numVal}]` : `"${rowData[0]}"`;
+                                }
+
+                                let tmpStr = Constants.LINE_BREAK + getTableIndentation(level) + key + ":" + "{";
                                 for (let j = 0; j < rowData.length; j++) {
                                     const colData = rowData[j];
                                     let type = types[j];
@@ -126,8 +135,9 @@ files.forEach((filePath) => {
                                     } else if (type == DataType.Value) {
                                         tmp = colData;
                                     } else if (type == DataType.PrimaryKey) {
-                                        tmp = colData;
-                                        tmpStr += "\"" + fieldNames[j] + "\":\"" + tmp + "\"";
+                                        let numVal = Number(colData);
+                                        tmp = (!isNaN(numVal)) ? `${numVal}` : `"${colData}"`;
+                                        tmpStr += "\"" + fieldNames[j] + "\":" + tmp;
                                     } else {
 
                                     }
