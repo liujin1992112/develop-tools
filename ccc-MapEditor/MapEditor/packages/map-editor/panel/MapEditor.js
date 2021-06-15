@@ -394,9 +394,18 @@ function setMapData(imageBase64Matrix, rowMax, colMax, mapJson) {
 
 function saveBgMap() {
     if (bgImage) {
-
+        //Editor.Ipc.sendToMain (message[, ...args, callback, timeout])
+        let res = Editor.Ipc.sendToMain("dialog:save-file", {
+            title: "保存背景地图", filters: [
+                { name: 'Images', extensions: ['jpg', 'png'] },
+            ]
+        }, (res) => {
+            console.log(res);
+        });
+        console.log(res);
+    } else {
+        Editor.Ipc.sendToMain("dialog:message-box", { title: "提示", message: "背景图片不能为空或者背景图片正在加载中..." });
     }
-    Editor.warn("保存背景地图");
 }
 
 btn_save_bg_map.onclick = saveBgMap;
