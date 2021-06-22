@@ -1,0 +1,19 @@
+{
+    "name": "bitmapfont",
+    "version": "0.0.1",
+    "description": "Generate bitmapfont",
+    "author": "Cocos Creator",
+    "main": "main.js",
+    "main-menu": {
+        "i18n:MAIN_MENU.package.title/bitmapfont/open": {
+            "message": "bitmapfont:open"
+        }
+    },
+    "panel": {
+        "main": "panel/index.js",
+        "type": "dockable",
+        "title": "bitmapfont",
+        "width": 400,
+        "height": 600
+    }
+}
