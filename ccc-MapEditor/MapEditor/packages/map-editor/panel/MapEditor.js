@@ -1,9 +1,13 @@
+const Fs = require('fs');
+
 const GRID_SPACE = 30;
 const CANVAS_EXTRA_VIEW = 300;
 const RGB_BLACK = "rgb(0, 0, 0)";
 const RGB_GREEN = "rgb(0, 255, 0)";
 const RGBA_BLUE = "rgba(0, 0, 255, 0.5)";
 const RGBA_RED = "rgba(255, 0, 0, 0.5)";
+
+const { dialog } = require('electron').remote;
 
 const RECT_TYPE = {
     NONE: 0,
@@ -394,15 +398,26 @@ function setMapData(imageBase64Matrix, rowMax, colMax, mapJson) {
 
 function saveBgMap() {
     if (bgImage) {
-        //Editor.Ipc.sendToMain (message[, ...args, callback, timeout])
-        let res = Editor.Ipc.sendToMain("dialog:save-file", {
+
+        let bgMapPath = dialog.showSaveDialogSync({
             title: "保存背景地图", filters: [
                 { name: 'Images', extensions: ['jpg', 'png'] },
             ]
-        }, (res) => {
-            console.log(res);
         });
-        console.log(res);
+        let src = bgImage.src;
+        let data = src.replace(/^data:image\/\w+;base64,/, "");
+        let buffer = new window.Buffer(data, 'base64');
+        Fs.writeFileSync(bgMapPath, buffer);
+        Editor.log("保存成功");
+        // //Editor.Ipc.sendToMain (message[, ...args, callback, timeout])
+        // let res = Editor.Ipc.sendToMain("dialog:save-file", {
+            // title: "保存背景地图", filters: [
+            //     { name: 'Images', extensions: ['jpg', 'png'] },
+            // ]
+        // }, (res) => {
+        //     console.log(res);
+        // });
+        // console.log(res);
     } else {
         Editor.Ipc.sendToMain("dialog:message-box", { title: "提示", message: "背景图片不能为空或者背景图片正在加载中..." });
     }
