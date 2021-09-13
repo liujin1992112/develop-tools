@@ -30,6 +30,8 @@
         {
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ButtonMergeImage = new System.Windows.Forms.Button();
+            this.ButtonOpenFolder = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -46,11 +48,22 @@
             this.ButtonMergeImage.UseVisualStyleBackColor = true;
             this.ButtonMergeImage.Click += new System.EventHandler(this.ButtonMergeImage_Click);
             // 
+            // ButtonOpenFolder
+            // 
+            this.ButtonOpenFolder.Location = new System.Drawing.Point(249, 352);
+            this.ButtonOpenFolder.Name = "ButtonOpenFolder";
+            this.ButtonOpenFolder.Size = new System.Drawing.Size(75, 23);
+            this.ButtonOpenFolder.TabIndex = 1;
+            this.ButtonOpenFolder.Text = "打开文件夹";
+            this.ButtonOpenFolder.UseVisualStyleBackColor = true;
+            this.ButtonOpenFolder.Click += new System.EventHandler(this.ButtonOpenFolder_Click);
+            // 
             // MergeImageDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ButtonOpenFolder);
             this.Controls.Add(this.ButtonMergeImage);
             this.Name = "MergeImageDialog";
             this.Text = "合并图片";
@@ -62,5 +75,7 @@
 
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button ButtonMergeImage;
+        private System.Windows.Forms.Button ButtonOpenFolder;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

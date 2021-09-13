@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using LitJson;
 
 namespace MapEditor.Forms
 {
@@ -51,6 +52,12 @@ namespace MapEditor.Forms
             }
 
             map.Save("E:\\test.png");
+        }
+
+        private void ButtonOpenFolder_Click(object sender, EventArgs e)
+        {
+            //DialogResult dialogResult  = this.openFileDialog1.ShowDialog();
+            DialogResult dialogResult = this.folderBrowserDialog1.ShowDialog();
         }
     }
 }

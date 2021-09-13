@@ -28,5 +28,11 @@ namespace MapEditor
             MergeImageDialog dialog = new MergeImageDialog();
             dialog.ShowDialog();
         }
+
+        private void SeperateTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SeparateRGBAndAlphaChannelDialog dialog = new SeparateRGBAndAlphaChannelDialog();
+            dialog.Show();
+        }
     }
 }
