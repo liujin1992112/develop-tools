@@ -11,15 +11,12 @@ var Path = require('path');
 var FileUtil = {
   /**
    * 读取文件
-   * @param {Fs.PathLike} path 路径
+   * @param {(srcPath: Fs.PathLike, stat: Fs.Stats) => void} handler 处理函数
    * @returns {Buffer|null}
    */
-  read: function read(path) {
-    if (!Fs.existsSync(path)) return null;
-    var stats = Fs.statSync(path);
-
+  read: function read(srcPath, stat) {
     if (stats.isFile()) {
-      return Fs.readFileSync(path);
+      return Fs.readFileSync(srcPath);
     }
 
     return null;

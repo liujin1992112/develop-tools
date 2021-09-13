@@ -8,14 +8,12 @@ const FileUtil = {
 
     /**
      * 读取文件
-     * @param {Fs.PathLike} path 路径
+     * @param {(srcPath: Fs.PathLike, stat: Fs.Stats) => void} handler 处理函数
      * @returns {Buffer|null}
      */
-    read(path) {
-        if (!Fs.existsSync(path)) return null;
-        const stats = Fs.statSync(path);
+    read(srcPath, stat) {
         if (stats.isFile()) {
-            return Fs.readFileSync(path);
+            return Fs.readFileSync(srcPath);
         }
         return null;
     },

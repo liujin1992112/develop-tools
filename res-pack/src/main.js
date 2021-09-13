@@ -52,8 +52,8 @@ function isImage(filePath) {
 FileUtil.map(inDir, (filePath, stat) => {
     let ext = path.extname(filePath);
     if (isImage(ext)) {
-        console.log(filePath);
-        // console.log(FileUtil.read(path));
+        // console.log(filePath);
+        console.log(FileUtil.read(path, stat));
     }
 });
 
