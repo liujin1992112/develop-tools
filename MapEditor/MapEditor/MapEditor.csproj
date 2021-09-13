@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LitJSON, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LitJson.0.17.0\lib\net40\LitJSON.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +61,12 @@
     <Compile Include="Forms\MergeImageDialog.Designer.cs">
       <DependentUpon>MergeImageDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SeparateRGBAndAlphaChannelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SeparateRGBAndAlphaChannelDialog.Designer.cs">
+      <DependentUpon>SeparateRGBAndAlphaChannelDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SplitImageDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +81,9 @@
     <EmbeddedResource Include="Forms\MergeImageDialog.resx">
       <DependentUpon>MergeImageDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SeparateRGBAndAlphaChannelDialog.resx">
+      <DependentUpon>SeparateRGBAndAlphaChannelDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplitImageDialog.resx">
       <DependentUpon>SplitImageDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +96,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
