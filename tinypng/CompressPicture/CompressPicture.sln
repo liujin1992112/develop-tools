@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1585
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompressPicture", "CompressPicture\CompressPicture.csproj", "{242CD8D2-E9DB-418B-A162-C9F83BF548FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Debug|x64.ActiveCfg = Debug|x64
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Debug|x64.Build.0 = Debug|x64
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Release|Any CPU.ActiveCfg = Release|x64
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Release|x64.ActiveCfg = Release|x64
+		{242CD8D2-E9DB-418B-A162-C9F83BF548FC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B6A9907-961D-4A01-8BAF-BF365060B9C6}
+	EndGlobalSection
+EndGlobal
