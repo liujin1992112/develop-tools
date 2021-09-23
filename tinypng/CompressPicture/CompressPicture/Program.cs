@@ -22,7 +22,7 @@ namespace CompressPicture
         };
 
         //当前使用的秘钥索引
-        static int ApiKeyIdx = 2;
+        static int ApiKeyIdx = 0;
 
         static void Main(string[] args)
         {
@@ -30,7 +30,8 @@ namespace CompressPicture
             Console.WriteLine("工作空间目录:{0}", workDir);
 
             //string assetDir = "E:\\Work\\Shooter\\shooter\\assets\\resources";
-            string assetDir = "E:\\Work\\Shooter\\shooter\\assets\\resources\\game\\images\\battle\\map";
+            //string assetDir = "E:\\Work\\Shooter\\shooter\\assets\\resources\\game\\images\\battle\\map";
+            string assetDir = "E:\\Work\\Shooter\\shooter\\assets\\resources\\game\\dragonbones";
             //string assetDir = "E:\\NewImages";
 
             BatchCompress(assetDir);
