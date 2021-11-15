@@ -34,5 +34,11 @@ namespace MapEditor
             SeparateRGBAndAlphaChannelDialog dialog = new SeparateRGBAndAlphaChannelDialog();
             dialog.Show();
         }
+
+        private void tIFConvertPNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TifConvertPNGDialog dialog = new TifConvertPNGDialog();
+            dialog.Show();
+        }
     }
 }

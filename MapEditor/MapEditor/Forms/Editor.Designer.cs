@@ -37,13 +37,14 @@
             this.地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SplitImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MergeImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SeperateTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tIFConvertPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.SeperateTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +104,8 @@
             this.地图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SplitImageMenuItem,
             this.MergeImageMenuItem,
-            this.SeperateTextureToolStripMenuItem});
+            this.SeperateTextureToolStripMenuItem,
+            this.tIFConvertPNGToolStripMenuItem});
             this.地图ToolStripMenuItem.Name = "地图ToolStripMenuItem";
             this.地图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.地图ToolStripMenuItem.Text = "地图";
@@ -121,6 +123,20 @@
             this.MergeImageMenuItem.Size = new System.Drawing.Size(218, 22);
             this.MergeImageMenuItem.Text = "合并图片";
             this.MergeImageMenuItem.Click += new System.EventHandler(this.MergeImageMenuItem_Click);
+            // 
+            // SeperateTextureToolStripMenuItem
+            // 
+            this.SeperateTextureToolStripMenuItem.Name = "SeperateTextureToolStripMenuItem";
+            this.SeperateTextureToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.SeperateTextureToolStripMenuItem.Text = "分离RGB和Alpha透明通道";
+            this.SeperateTextureToolStripMenuItem.Click += new System.EventHandler(this.SeperateTextureToolStripMenuItem_Click);
+            // 
+            // tIFConvertPNGToolStripMenuItem
+            // 
+            this.tIFConvertPNGToolStripMenuItem.Name = "tIFConvertPNGToolStripMenuItem";
+            this.tIFConvertPNGToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.tIFConvertPNGToolStripMenuItem.Text = "TIF转PNG";
+            this.tIFConvertPNGToolStripMenuItem.Click += new System.EventHandler(this.tIFConvertPNGToolStripMenuItem_Click);
             // 
             // radioButton1
             // 
@@ -185,13 +201,6 @@
             this.tabPage2.Text = "下载管理";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // SeperateTextureToolStripMenuItem
-            // 
-            this.SeperateTextureToolStripMenuItem.Name = "SeperateTextureToolStripMenuItem";
-            this.SeperateTextureToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.SeperateTextureToolStripMenuItem.Text = "分离RGB和Alpha透明通道";
-            this.SeperateTextureToolStripMenuItem.Click += new System.EventHandler(this.SeperateTextureToolStripMenuItem_Click);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -233,5 +242,6 @@
         private System.Windows.Forms.ToolStripMenuItem SplitImageMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MergeImageMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SeperateTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tIFConvertPNGToolStripMenuItem;
     }
 }
