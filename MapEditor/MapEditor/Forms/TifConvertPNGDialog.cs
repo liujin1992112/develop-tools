@@ -20,16 +20,21 @@ namespace MapEditor.Forms
         private void ChooseTifDir_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
-
-            this.label_tif_dir_name.Text = dialog.SelectedPath;
+            dialog.Description = "请选择tif图片的文件目录";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                this.label_tif_dir_name.Text = dialog.SelectedPath;
+            }
         }
 
         private void ChoosePngDir_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
-            this.label_png_dir_name.Text = dialog.SelectedPath;
+            dialog.Description = "请选择png图片的输出目录";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                this.label_png_dir_name.Text = dialog.SelectedPath;
+            }
         }
 
         private void button_start_convert_Click(object sender, EventArgs e)
