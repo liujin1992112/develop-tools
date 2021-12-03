@@ -19,9 +19,11 @@ namespace MapEditor.Forms
         private double minRatio = 0.5;  //最小缩放比例
         private double maxRatio = 3;    //最大缩放比例
 
-        private Graphics g;
-        private Pen gridPen = new Pen(Color.Black);
+        private Graphics g;//画布
+        private Pen gridPen = new Pen(Color.Black);//网格画笔
+        private Brush brush = new SolidBrush(Color.Red);//填充画刷
 
+        private MapData mapData = new MapData();
 
         public MapEditor()
         {
@@ -97,6 +99,18 @@ namespace MapEditor.Forms
             {
                 g.DrawLine(gridPen, j * tileWidth, 0, j * tileWidth, windowHeight);
             }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Tile tile;
+                    if (this.mapData.TryGetTile(i, j, out tile))
+                    {
+                        this.DrawTile(i, j, true);
+                    }
+                }
+            }
         }
 
         private void MapEditor_Resize(object sender, EventArgs e)
@@ -141,25 +155,46 @@ namespace MapEditor.Forms
 
         private void MapEditor_MouseClick(object sender, MouseEventArgs e)
         {
-            this.FillTile(e);
-        }
+            if (this.tileHeight <= 0 || this.tileHeight <= 0) return;
 
-        public void FillTile(MouseEventArgs e)
-        {
             int row = e.Y / this.tileHeight;
             int col = e.X / this.tileWidth;
 
-            int x = col * this.tileHeight;
-            int y = row * this.tileWidth;
+            this.DrawTile(row, col);
+        }
 
-            Brush brush = new SolidBrush(Color.Red);
-            this.g.FillRectangle(brush, x, y, this.tileWidth, this.tileHeight);
-            Console.WriteLine("x:{0} y:{1}", e.X, e.Y);
+        public void DrawTile(int row, int col, bool bRepaint = false)
+        {
+            if (this.mapData.HasTile(row, col))
+            {
+                if (bRepaint)
+                {
+                    int x = col * this.tileHeight;
+                    int y = row * this.tileWidth;
+
+                    this.g.FillRectangle(brush, x, y, this.tileWidth, this.tileHeight);
+                }
+            }
+            else
+            {
+                this.mapData.Add(row, col, new Tile());
+
+                int x = col * this.tileHeight;
+                int y = row * this.tileWidth;
+
+                this.g.FillRectangle(brush, x, y, this.tileWidth, this.tileHeight);
+            }
+
         }
 
         private void MapEditor_MouseMove(object sender, MouseEventArgs e)
         {
-            this.FillTile(e);
+            if (this.tileHeight <= 0 || this.tileHeight <= 0) return;
+
+            int row = e.Y / this.tileHeight;
+            int col = e.X / this.tileWidth;
+
+            this.DrawTile(row, col);
         }
     }
 }
