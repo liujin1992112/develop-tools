@@ -40,5 +40,12 @@ namespace MapEditor
             TifConvertPNGDialog dialog = new TifConvertPNGDialog();
             dialog.Show();
         }
+
+        private void openMapEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.MapEditor mapEditor = new Forms.MapEditor();
+            mapEditor.MaximizeBox = true;
+            mapEditor.Show();
+        }
     }
 }

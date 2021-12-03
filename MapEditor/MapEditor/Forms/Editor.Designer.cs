@@ -45,6 +45,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.openMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -105,7 +106,8 @@
             this.SplitImageMenuItem,
             this.MergeImageMenuItem,
             this.SeperateTextureToolStripMenuItem,
-            this.tIFConvertPNGToolStripMenuItem});
+            this.tIFConvertPNGToolStripMenuItem,
+            this.openMapEditorToolStripMenuItem});
             this.地图ToolStripMenuItem.Name = "地图ToolStripMenuItem";
             this.地图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.地图ToolStripMenuItem.Text = "地图";
@@ -201,6 +203,13 @@
             this.tabPage2.Text = "下载管理";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // openMapEditorToolStripMenuItem
+            // 
+            this.openMapEditorToolStripMenuItem.Name = "openMapEditorToolStripMenuItem";
+            this.openMapEditorToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.openMapEditorToolStripMenuItem.Text = "地图编辑器";
+            this.openMapEditorToolStripMenuItem.Click += new System.EventHandler(this.openMapEditorToolStripMenuItem_Click);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -243,5 +252,6 @@
         private System.Windows.Forms.ToolStripMenuItem MergeImageMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SeperateTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tIFConvertPNGToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openMapEditorToolStripMenuItem;
     }
 }
