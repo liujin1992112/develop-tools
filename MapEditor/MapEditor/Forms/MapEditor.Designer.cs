@@ -45,6 +45,7 @@
             this.rb_occlude = new System.Windows.Forms.RadioButton();
             this.rb_obstacle = new System.Windows.Forms.RadioButton();
             this.rb_fill = new System.Windows.Forms.RadioButton();
+            this.load_map_button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -205,11 +206,22 @@
             this.rb_fill.Text = "填充";
             this.rb_fill.UseVisualStyleBackColor = true;
             // 
+            // load_map_button
+            // 
+            this.load_map_button.Location = new System.Drawing.Point(543, 52);
+            this.load_map_button.Name = "load_map_button";
+            this.load_map_button.Size = new System.Drawing.Size(75, 23);
+            this.load_map_button.TabIndex = 10;
+            this.load_map_button.Text = "载入地图背景";
+            this.load_map_button.UseVisualStyleBackColor = true;
+            this.load_map_button.Click += new System.EventHandler(this.load_map_button_Click);
+            // 
             // MapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.load_map_button);
             this.Controls.Add(this.rb_fill);
             this.Controls.Add(this.rb_obstacle);
             this.Controls.Add(this.rb_occlude);
@@ -251,5 +263,6 @@
         private System.Windows.Forms.RadioButton rb_occlude;
         private System.Windows.Forms.RadioButton rb_obstacle;
         private System.Windows.Forms.RadioButton rb_fill;
+        private System.Windows.Forms.Button load_map_button;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -24,6 +25,8 @@ namespace MapEditor.Forms
         private Brush brush = new SolidBrush(Color.Red);//填充画刷
 
         private MapData mapData = new MapData();
+
+        private Image backgroundImage;
 
         public MapEditor()
         {
@@ -52,15 +55,15 @@ namespace MapEditor.Forms
                 }
             }
             Console.WriteLine("ratio:{0}", this.ratio);
-            this.DrawGrid();
+            this.DrawMap();
         }
 
         private void MapEditor_Paint(object sender, PaintEventArgs e)
         {
-            this.DrawGrid();
+            this.DrawMap();
         }
 
-        private void DrawGrid()
+        private void DrawMap()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -80,7 +83,6 @@ namespace MapEditor.Forms
 
             Console.WriteLine("tileWidth:{0}  tileHeight:{1}", this.tileWidth, this.tileHeight);
 
-
             //获取窗口大小
             int windowWidth = this.Width;
             int windowHeight = this.Height;
@@ -88,17 +90,18 @@ namespace MapEditor.Forms
             int rows = windowHeight / tileHeight + 1;
             int cols = windowWidth / tileWidth + 1;
 
-            //行
-            for (int i = 0; i < rows; i++)
+            if (this.backgroundImage != null)
             {
-                g.DrawLine(gridPen, 0, i * tileHeight, windowWidth, i * tileHeight);
+                int srcBgWidth = Convert.ToInt32(this.backgroundImage.Width);
+                int srcBgHeight = Convert.ToInt32(this.backgroundImage.Height);
+
+                int destBgWidth = Convert.ToInt32(this.backgroundImage.Width * this.ratio);
+                int destBgHeight = Convert.ToInt32(this.backgroundImage.Height * this.ratio);
+
+                this.g.DrawImage(this.backgroundImage, new Rectangle(0, 0, destBgWidth, destBgHeight), 0, 0, srcBgWidth, srcBgHeight, GraphicsUnit.Pixel);
             }
 
-            //列
-            for (int j = 0; j < cols; j++)
-            {
-                g.DrawLine(gridPen, j * tileWidth, 0, j * tileWidth, windowHeight);
-            }
+            this.DrawGrid(rows, cols);
 
             for (int i = 0; i < rows; i++)
             {
@@ -113,9 +116,34 @@ namespace MapEditor.Forms
             }
         }
 
+
+        private void DrawBackground()
+        {
+
+        }
+
+        private void DrawGrid(int rows, int cols)
+        {
+            //获取窗口大小
+            int windowWidth = this.Width;
+            int windowHeight = this.Height;
+
+            //行
+            for (int i = 0; i < rows; i++)
+            {
+                g.DrawLine(gridPen, 0, i * tileHeight, windowWidth, i * tileHeight);
+            }
+
+            //列
+            for (int j = 0; j < cols; j++)
+            {
+                g.DrawLine(gridPen, j * tileWidth, 0, j * tileWidth, windowHeight);
+            }
+        }
+
         private void MapEditor_Resize(object sender, EventArgs e)
         {
-            this.DrawGrid();
+            this.DrawMap();
         }
 
         private void tb_tile_width_TextChanged(object sender, EventArgs e)
@@ -129,12 +157,12 @@ namespace MapEditor.Forms
 
         private void tb_tile_width_MouseLeave(object sender, EventArgs e)
         {
-            this.DrawGrid();
+            this.DrawMap();
         }
 
         private void tb_tile_height_MouseLeave(object sender, EventArgs e)
         {
-            this.DrawGrid();
+            this.DrawMap();
         }
 
         private void tb_tile_width_KeyPress(object sender, KeyPressEventArgs e)
@@ -195,6 +223,18 @@ namespace MapEditor.Forms
             int col = e.X / this.tileWidth;
 
             this.DrawTile(row, col);
+        }
+
+        private void load_map_button_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = dialog.FileName;
+                this.backgroundImage = Image.FromStream(new MemoryStream(File.ReadAllBytes(fileName)));
+                this.DrawMap();
+                Console.WriteLine(dialog.FileName);
+            }
         }
     }
 }
