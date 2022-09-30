@@ -47,7 +47,8 @@ namespace MapEditor.Forms
                 return;
             }
 
-            string tifDir = this.label_bmp_dir_name.Text.Trim();
+            string bmpDir = this.label_bmp_dir_name.Text.Trim();
+            string outDir = this.label_png_dir_name.Text.Trim();
 
             // 禁用按钮
             button_start_convert.Enabled = false;
@@ -56,7 +57,7 @@ namespace MapEditor.Forms
 
             Task.Factory.StartNew(() =>
             {
-                string[] files = Directory.GetFiles(tifDir, "*.bmp", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(bmpDir, "*.bmp", SearchOption.AllDirectories);
                 foreach (string file in files)
                 {
                     Image image = Image.FromFile(file);
@@ -76,8 +77,15 @@ namespace MapEditor.Forms
                     Graphics g = Graphics.FromImage(map);//定义画笔
                     g.DrawImage(image, new Rectangle(0, 0, width, height));
 
-                    string filename = Path.GetFileNameWithoutExtension(file);
-                    map.Save(Path.Combine(this.label_png_dir_name.Text.Trim(), filename) + ".png");
+                    // 保持源目录结构输出
+                    string newfilename = file.Replace(bmpDir, outDir);
+                    newfilename = newfilename.Replace(Path.GetExtension(newfilename), ".png");
+                    DirectoryInfo dir = Directory.GetParent(newfilename);
+                    if (!dir.Exists)
+                    {
+                        dir.Create();
+                    }
+                    map.Save(newfilename);
                 }
             }).ContinueWith(m =>
             {
