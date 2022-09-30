@@ -47,5 +47,11 @@ namespace MapEditor
             mapEditor.MaximizeBox = true;
             mapEditor.Show();
         }
+
+        private void bmpConvertPNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BmpConvertPNGDialog dialog = new BmpConvertPNGDialog();
+            dialog.Show();
+        }
     }
 }
