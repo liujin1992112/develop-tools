@@ -53,5 +53,12 @@ namespace MapEditor
             BmpConvertPNGDialog dialog = new BmpConvertPNGDialog();
             dialog.Show();
         }
+
+        private void MakeSpriteSheetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SpritesheetDialog dialog = new SpritesheetDialog();
+            dialog.Show();
+      
+        }
     }
 }
