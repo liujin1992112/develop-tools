@@ -32,22 +32,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDir = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.ButtonMake = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownCols = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownUnitWidth = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownUnitHeight = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownUnitWidth = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCols = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
             this.SuspendLayout();
             // 
             // ButtonOpenFolder
@@ -71,6 +72,7 @@
             // 
             // textBoxDir
             // 
+            this.textBoxDir.AllowDrop = true;
             this.textBoxDir.Location = new System.Drawing.Point(119, 23);
             this.textBoxDir.Name = "textBoxDir";
             this.textBoxDir.Size = new System.Drawing.Size(373, 21);
@@ -87,12 +89,12 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "保存目录：";
             // 
-            // textBox1
+            // textBoxOutput
             // 
-            this.textBox1.Location = new System.Drawing.Point(119, 61);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(373, 21);
-            this.textBox1.TabIndex = 4;
+            this.textBoxOutput.Location = new System.Drawing.Point(119, 61);
+            this.textBoxOutput.Name = "textBoxOutput";
+            this.textBoxOutput.Size = new System.Drawing.Size(373, 21);
+            this.textBoxOutput.TabIndex = 4;
             // 
             // ButtonMake
             // 
@@ -131,76 +133,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "雪碧图配置信息";
             // 
-            // label4
+            // numericUpDownUnitHeight
             // 
-            this.label4.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 59);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "雪碧图的列数：";
-            // 
-            // label5
-            // 
-            this.label5.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(242, 28);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 12);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "每一张宽度：";
-            // 
-            // label6
-            // 
-            this.label6.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(242, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 12);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "每一张高度：";
-            // 
-            // numericUpDownRows
-            // 
-            this.numericUpDownRows.Enabled = false;
-            this.numericUpDownRows.Location = new System.Drawing.Point(101, 20);
-            this.numericUpDownRows.Maximum = new decimal(new int[] {
-            1000,
+            this.numericUpDownUnitHeight.Location = new System.Drawing.Point(325, 50);
+            this.numericUpDownUnitHeight.Maximum = new decimal(new int[] {
+            10000,
             0,
             0,
             0});
-            this.numericUpDownRows.Minimum = new decimal(new int[] {
+            this.numericUpDownUnitHeight.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownRows.Name = "numericUpDownRows";
-            this.numericUpDownRows.Size = new System.Drawing.Size(71, 21);
-            this.numericUpDownRows.TabIndex = 13;
-            this.numericUpDownRows.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // numericUpDownCols
-            // 
-            this.numericUpDownCols.Location = new System.Drawing.Point(101, 50);
-            this.numericUpDownCols.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownCols.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownCols.Name = "numericUpDownCols";
-            this.numericUpDownCols.Size = new System.Drawing.Size(71, 21);
-            this.numericUpDownCols.TabIndex = 14;
-            this.numericUpDownCols.Value = new decimal(new int[] {
+            this.numericUpDownUnitHeight.Name = "numericUpDownUnitHeight";
+            this.numericUpDownUnitHeight.Size = new System.Drawing.Size(71, 21);
+            this.numericUpDownUnitHeight.TabIndex = 16;
+            this.numericUpDownUnitHeight.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -228,27 +177,90 @@
             0,
             0});
             // 
-            // numericUpDownUnitHeight
+            // numericUpDownCols
             // 
-            this.numericUpDownUnitHeight.Location = new System.Drawing.Point(325, 50);
-            this.numericUpDownUnitHeight.Maximum = new decimal(new int[] {
-            10000,
+            this.numericUpDownCols.Location = new System.Drawing.Point(101, 50);
+            this.numericUpDownCols.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
-            this.numericUpDownUnitHeight.Minimum = new decimal(new int[] {
+            this.numericUpDownCols.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownUnitHeight.Name = "numericUpDownUnitHeight";
-            this.numericUpDownUnitHeight.Size = new System.Drawing.Size(71, 21);
-            this.numericUpDownUnitHeight.TabIndex = 16;
-            this.numericUpDownUnitHeight.Value = new decimal(new int[] {
+            this.numericUpDownCols.Name = "numericUpDownCols";
+            this.numericUpDownCols.Size = new System.Drawing.Size(71, 21);
+            this.numericUpDownCols.TabIndex = 14;
+            this.numericUpDownCols.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+            this.numericUpDownCols.ValueChanged += new System.EventHandler(this.numericUpDownCols_ValueChanged);
+            // 
+            // numericUpDownRows
+            // 
+            this.numericUpDownRows.Enabled = false;
+            this.numericUpDownRows.Location = new System.Drawing.Point(101, 20);
+            this.numericUpDownRows.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.Name = "numericUpDownRows";
+            this.numericUpDownRows.Size = new System.Drawing.Size(71, 21);
+            this.numericUpDownRows.TabIndex = 13;
+            this.numericUpDownRows.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(242, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "每一张高度：";
+            // 
+            // label5
+            // 
+            this.label5.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(242, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "每一张宽度：";
+            // 
+            // label4
+            // 
+            this.label4.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 59);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "雪碧图的列数：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 351);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 12);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "使用方法：";
             // 
             // SpritesheetDialog
             // 
@@ -256,21 +268,24 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ButtonMake);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxOutput);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxDir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonOpenFolder);
             this.Name = "SpritesheetDialog";
             this.Text = "Spritesheet";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.SpritesheetDialog_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.SpritesheetDialog_DragEnter);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUnitWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,7 +297,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxDir;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxOutput;
         private System.Windows.Forms.Button ButtonMake;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -293,5 +308,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCols;
         private System.Windows.Forms.NumericUpDown numericUpDownUnitWidth;
         private System.Windows.Forms.NumericUpDown numericUpDownUnitHeight;
+        private System.Windows.Forms.Label label7;
     }
 }
