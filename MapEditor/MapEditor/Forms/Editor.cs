@@ -60,5 +60,11 @@ namespace MapEditor
             dialog.Show();
       
         }
+
+        private void MakeFontClipToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontClipDialog dialog = new FontClipDialog();
+            dialog.Show();
+        }
     }
 }

@@ -334,6 +334,7 @@ namespace MapEditor.Forms
                 g.DrawImage(image, new Rectangle(x, y, tileWidth, tileHeight));
                 Console.WriteLine("处理:{0}完成", path);
             }
+            g.Dispose();
 
             map.Save(output);
 

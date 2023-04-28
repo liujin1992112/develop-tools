@@ -41,13 +41,14 @@
             this.tIFConvertPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bmpConvertPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MakeSpriteSheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MakeFontClipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.MakeSpriteSheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -111,7 +112,8 @@
             this.tIFConvertPNGToolStripMenuItem,
             this.openMapEditorToolStripMenuItem,
             this.bmpConvertPNGToolStripMenuItem,
-            this.MakeSpriteSheetToolStripMenuItem});
+            this.MakeSpriteSheetToolStripMenuItem,
+            this.MakeFontClipToolStripMenuItem});
             this.地图ToolStripMenuItem.Name = "地图ToolStripMenuItem";
             this.地图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.地图ToolStripMenuItem.Text = "地图";
@@ -157,6 +159,20 @@
             this.bmpConvertPNGToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.bmpConvertPNGToolStripMenuItem.Text = "BMP转PNG";
             this.bmpConvertPNGToolStripMenuItem.Click += new System.EventHandler(this.bmpConvertPNGToolStripMenuItem_Click);
+            // 
+            // MakeSpriteSheetToolStripMenuItem
+            // 
+            this.MakeSpriteSheetToolStripMenuItem.Name = "MakeSpriteSheetToolStripMenuItem";
+            this.MakeSpriteSheetToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.MakeSpriteSheetToolStripMenuItem.Text = "制作雪碧图";
+            this.MakeSpriteSheetToolStripMenuItem.Click += new System.EventHandler(this.MakeSpriteSheetToolStripMenuItem_Click);
+            // 
+            // MakeFontClipToolStripMenuItem
+            // 
+            this.MakeFontClipToolStripMenuItem.Name = "MakeFontClipToolStripMenuItem";
+            this.MakeFontClipToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.MakeFontClipToolStripMenuItem.Text = "制作字体图片";
+            this.MakeFontClipToolStripMenuItem.Click += new System.EventHandler(this.MakeFontClipToolStripMenuItem_Click);
             // 
             // radioButton1
             // 
@@ -221,13 +237,6 @@
             this.tabPage2.Text = "下载管理";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // MakeSpriteSheetToolStripMenuItem
-            // 
-            this.MakeSpriteSheetToolStripMenuItem.Name = "MakeSpriteSheetToolStripMenuItem";
-            this.MakeSpriteSheetToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.MakeSpriteSheetToolStripMenuItem.Text = "制作雪碧图";
-            this.MakeSpriteSheetToolStripMenuItem.Click += new System.EventHandler(this.MakeSpriteSheetToolStripMenuItem_Click);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -273,5 +282,6 @@
         private System.Windows.Forms.ToolStripMenuItem openMapEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bmpConvertPNGToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MakeSpriteSheetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MakeFontClipToolStripMenuItem;
     }
 }
